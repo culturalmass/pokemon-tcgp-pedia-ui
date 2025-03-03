@@ -38,7 +38,7 @@ export const Input = ({
 
   return (
     <div className="relative flex flex-col w-full gap-px pb-2">
-      <div className="flex justify-between pl-2">
+      <div className="flex justify-between pl-2 text-nowrap">
         <label htmlFor={id} className="font-semibold capitalize">
           {label}
         </label>
