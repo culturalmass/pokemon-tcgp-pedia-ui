@@ -1,101 +1,248 @@
-import Image from "next/image";
+"use client"
+import { useForm } from "react-hook-form"
+import { Input } from "./components/ui/custom-input"
+import { FormCardData } from "./types"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { CardSchema } from "./types/validation-schemas"
+import { createCard } from "./actions"
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<FormCardData>({
+    resolver: zodResolver(CardSchema),
+  })
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const onSubmit = handleSubmit((data) => {
+    console.log(data, "data")
+    createCard(data)
+  })
+
+  console.log(errors)
+
+  return (
+    <main className="flex flex-col px-6 py-12 bg-white">
+      <h4 className="w-2xs p-2 text-2xl text-white border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-black">
+        Data Upload Section
+      </h4>
+      {/* <div className="flex w-56 h-12  gap-y-8 border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-white" /> */}
+      <div className="flex container flex-col gap-y-3 mt-5 text-center">
+        <div className="flex w-full justify-between">
+          <h4 className="w-fit p-2 text-xl border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-white">
+            Add Card
+          </h4>
+          <button
+            onClick={onSubmit}
+            className="flex w-fit justify-center p-2 text-black border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-white hover:bg-black  hover:text-white hover:drop-shadow-[-2px_-2px_2px_rgba(83,83,83,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            Submit Form
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+
+        <div className="flex flex-col gap-y-3 w-full">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="grid grid-cols-4 gap-x-24 w-full"
+          >
+            <Input
+              label="name"
+              type="text"
+              id="name"
+              placeholder="Pokemon card name..."
+              register={register}
+              error={errors.name}
+            />
+            <Input
+              label="superType"
+              type="text"
+              id="superType"
+              placeholder="Card superType..."
+              register={register}
+              setValue={setValue}
+              error={errors.superType}
+            />
+            <Input
+              label="subType"
+              type="text"
+              id="subTypes"
+              placeholder="Card subType..."
+              register={register}
+              setValue={setValue}
+              error={errors.subTypes}
+            />
+            <Input
+              label="hp"
+              type="text"
+              id="hp"
+              placeholder="Card hp..."
+              register={register}
+              error={errors.hp}
+            />
+            <Input
+              label="types"
+              type="text"
+              id="types"
+              placeholder="Card Type..."
+              register={register}
+              setValue={setValue}
+              error={errors.types}
+            />
+            <Input
+              label="evolves From"
+              type="text"
+              id="evolvesFrom"
+              placeholder="Card pokemon evolves from..."
+              register={register}
+              error={errors.evolvesFrom}
+            />
+            <Input
+              label="weakness"
+              type="text"
+              id="weakness"
+              placeholder="Card Pokemon weakness..."
+              register={register}
+              setValue={setValue}
+              error={errors.weakness}
+            />
+            <Input
+              label="retreat Cost"
+              type="number"
+              id="retreatCost"
+              placeholder="Card pokemon retreat cost..."
+              register={register}
+              error={errors.retreatCost}
+              valueAsNumber
+            />
+            <Input
+              label="set Id"
+              type="number"
+              id="setId"
+              placeholder="Card set Id..."
+              register={register}
+              error={errors.setId}
+              valueAsNumber
+            />
+            <Input
+              label="Packs"
+              type="text"
+              id="packs"
+              placeholder="Card packs?..."
+              register={register}
+              error={errors.packs}
+            />
+            <Input
+              label="card Number"
+              type="text"
+              id="number"
+              placeholder="Card number..."
+              register={register}
+              error={errors.number}
+            />
+            <Input
+              label="artist"
+              type="text"
+              id="artist"
+              placeholder="Card artist..."
+              register={register}
+              error={errors.artist}
+            />
+            <Input
+              label="rarity"
+              type="text"
+              id="rarity"
+              placeholder="Card rarity..."
+              setValue={setValue}
+              register={register}
+              error={errors.rarity}
+            />
+            <Input
+              label="flavor Text"
+              type="text"
+              id="flavorText"
+              placeholder="Card flavor text..."
+              register={register}
+              error={errors.flavorText}
+            />
+            <Input
+              label="national Pokedex Number"
+              type="text"
+              id="nationalPokedexNumber"
+              placeholder="Pokemon national number..."
+              register={register}
+              error={errors.nationalPokedexNumber}
+            />
+            <Input
+              label="flavor Description"
+              type="text"
+              id="flavorDescription"
+              placeholder="Card flavor description..."
+              register={register}
+              error={errors.flavorDescription}
+            />
+            <Input
+              label="flavor Height"
+              type="text"
+              id="flavorHeight"
+              placeholder="Card flavor height..."
+              register={register}
+              error={errors.flavorHeight}
+            />
+            <Input
+              label="flavor Weight"
+              type="text"
+              id="flavorWeight"
+              placeholder="Card flavor weight..."
+              register={register}
+              error={errors.flavorWeight}
+            />
+            <Input
+              label="card Wonder Pick Cost"
+              type="text"
+              id="wonderPickCost"
+              placeholder="Card wonder pick cost..."
+              register={register}
+              error={errors.wonderPickCost}
+            />
+            <Input
+              label="exchange Item Id"
+              type="number"
+              id="exchangeItemId"
+              placeholder="Card exchange item id..."
+              register={register}
+              error={errors.exchangeItemId}
+              valueAsNumber
+            />
+
+            <Input
+              label="trade Token Cost"
+              type="text"
+              id="tradeTokenCost"
+              placeholder="Card trade token cost..."
+              register={register}
+              error={errors.tradeTokenCost}
+            />
+            <Input
+              label="generation"
+              type="text"
+              id="generation"
+              placeholder="Card generation..."
+              register={register}
+              error={errors.generation}
+            />
+            <Input
+              label="imagen"
+              type="text"
+              id="img"
+              placeholder="Card imagen..."
+              register={register}
+              error={errors.img}
+            />
+          </form>
+        </div>
+      </div>
+    </main>
+  )
 }
