@@ -1,23 +1,26 @@
-import { InputProps, Rarity, SubTypes, SuperType, Types } from "@/app/types"
 import { useState } from "react"
+import { InputProps, Rarity, SubTypes, SuperType, Types } from "@/app/types"
+import { FieldValues, Path, PathValue } from "react-hook-form"
 
-export const Input = ({
+export const Input = <T extends FieldValues>({
   label,
   type,
   id,
   placeholder,
   register,
   valueAsNumber,
+  value: currentValue,
   setValue,
   error,
-}: InputProps) => {
+}: InputProps<T>) => {
   const [onFocus, setOnFocus] = useState(false)
   const needSelector =
     id === "superType" ||
     id === "subTypes" ||
     id === "types" ||
     id === "rarity" ||
-    id === "weakness"
+    id === "weakness" ||
+    id === "cost"
       ? true
       : false
   const options =
@@ -25,14 +28,23 @@ export const Input = ({
       ? Object.keys(SuperType)
       : id === "subTypes"
       ? Object.keys(SubTypes)
-      : id === "types" || id === "weakness"
+      : id === "types" || id === "weakness" || id === "cost"
       ? Object.keys(Types)
       : id === "rarity"
       ? Object.keys(Rarity)
       : []
 
   const handleSelector = (value: string) => {
-    setValue?.(id, value)
+    if (id === "cost") {
+      const newType = currentValue?.("cost" as PathValue<T, Path<T>>)
+      const newValue = newType
+        ? ((newType + ", " + value) as PathValue<T, Path<T>>)
+        : (value as PathValue<T, Path<T>>)
+
+      setValue?.(id, newValue)
+    } else {
+      setValue?.(id, value as PathValue<T, Path<T>>)
+    }
     setOnFocus(false)
   }
 

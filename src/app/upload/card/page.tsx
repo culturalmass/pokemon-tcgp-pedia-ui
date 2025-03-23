@@ -1,12 +1,12 @@
 "use client"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
 import { createCard } from "@/app/actions"
 import { Input } from "@/app/components/ui/custom-input"
 import { FormCardData } from "@/app/types"
 import { CardSchema } from "@/app/types/validation-schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
-import React from "react"
-import { useForm } from "react-hook-form"
+import Button from "@/app/components/ui/custom-button"
 
 const UploadCard = () => {
   const router = useRouter()
@@ -23,6 +23,7 @@ const UploadCard = () => {
     console.log(data, "data")
     createCard(data)
   })
+
   return (
     <main className="flex flex-col px-6 py-12 bg-white">
       <h4 className="w-2xs p-2 text-2xl text-white border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-black">
@@ -31,29 +32,18 @@ const UploadCard = () => {
       <div className="flex container flex-col gap-y-3 mt-5 text-center">
         <div className="flex w-full justify-between">
           <div className="flex gap-6">
-            <button
-              onClick={() => router.push("/")}
-              className="text-2xl justify-center p-2 text-black border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-white hover:bg-black  hover:text-white hover:drop-shadow-[-2px_-2px_2px_rgba(83,83,83,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out"
-            >
-              ⬅
-            </button>
+            <Button onClick={() => router.push("/")}>⬅</Button>
             <h4 className="w-fit p-2 text-xl border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-white">
               Add Card
             </h4>
           </div>
-
-          <button
-            onClick={onSubmit}
-            className="flex w-fit justify-center p-2 text-black border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-white hover:bg-black  hover:text-white hover:drop-shadow-[-2px_-2px_2px_rgba(83,83,83,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-300 ease-in-out"
-          >
-            Submit Form
-          </button>
+          <Button onClick={onSubmit}>Submit Form</Button>
         </div>
 
         <div className="flex flex-col gap-y-3 w-full">
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="grid grid-cols-4 gap-x-24 w-full"
+            className="grid custom-template-grid gap-x-24 w-full"
           >
             <Input
               label="name"
@@ -125,13 +115,12 @@ const UploadCard = () => {
               valueAsNumber
             />
             <Input
-              label="set Id"
-              type="number"
-              id="setId"
-              placeholder="Card set Id..."
+              label="pack Code"
+              type="text"
+              id="packCode"
+              placeholder="Card pack code..."
               register={register}
-              error={errors.setId}
-              valueAsNumber
+              error={errors.packCode}
             />
             <Input
               label="Packs"

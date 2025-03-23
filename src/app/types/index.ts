@@ -1,4 +1,11 @@
-import { FieldError, UseFormRegister, UseFormSetValue } from "react-hook-form"
+import {
+  FieldError,
+  UseFormRegister,
+  UseFormSetValue,
+  FieldValues,
+  Path,
+  UseFormGetValues,
+} from "react-hook-form"
 
 export enum SuperType {
   POKEMON = "POKEMON",
@@ -47,7 +54,7 @@ export type FormCardData = {
   evolvesFrom?: string
   weakness?: Types
   retreatCost?: number
-  setId: number
+  packCode: string
   packs: string
   number: string
   artist?: string
@@ -63,16 +70,53 @@ export type FormCardData = {
   generation?: string
   img: string
 }
-
-export interface InputProps {
+export type FormSetData = {
+  name: string
+  code: string
+  releaseDate: string
+  generation: string
+  boosterPackList: string
+}
+export type FormAbilityData = {
+  name: string
+  text: string
+  cardNumber: string
+}
+export type FormAttackData = {
+  name: string
+  cost: string
+  damage?: string
+  text?: string
+  convertedEnergyCost: number
+  cardNumber: string
+}
+export type FormExchangeItemData = {
+  exchangeMinCost: string
+  packPointsCost: string
+  cardNumber: string
+}
+export type FormSpecialShopTicketItemData = {
+  quantity: string
+  shineDustCost: string
+  cardNumber: string
+}
+export type FormTradeTokenItemData = {
+  quantity: string
+  cardNumber: string
+}
+export type FormFlairItemData = {
+  name: string
+  shineDustCost: string
+  cardNumber: string
+}
+export interface InputProps<T extends FieldValues> {
   label: string
   type: string
-  id: ValidFieldIds
+  id: Path<T>
   placeholder: string
-  register: UseFormRegister<FormCardData>
-  setValue?: UseFormSetValue<FormCardData>
+  register: UseFormRegister<T>
+  value?: UseFormGetValues<T>
+  setValue?: UseFormSetValue<T>
   error?: FieldError | undefined
   valueAsNumber?: boolean
 }
-
-export type ValidFieldIds = keyof FormCardData

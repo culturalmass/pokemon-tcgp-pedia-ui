@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.custom-template-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(271px, 100%), 1fr));
+}

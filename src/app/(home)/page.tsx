@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import Button from "../components/ui/custom-button"
 
 export default function Home() {
   const router = useRouter()
@@ -11,16 +12,33 @@ export default function Home() {
       </h4>
 
       <ul className="flex flex-col gap-3 py-5">
-        <li
-          className="text-xl w-fit px-2 text-black border-1 border-[rgba(83,83,83,1)] hover:bg-black hover:text-white hover:drop-shadow-[-2px_2px_2px_rgba(83,83,83,1)] drop-shadow-[-4px_4px_2px_rgba(83,83,83,1)] bg-white hover:-translate-x-1 hover:translate-y-1 transition-all duration-300 ease-in-out cursor-pointer"
-          onClick={() => router.push("/upload/card")}
-        >
+        <Button invert onClick={() => router.push("/upload/card")}>
           Add Card
-        </li>
-
-        <li className="text-xl w-fit px-2 text-black border-1 border-[rgba(83,83,83,1)] hover:bg-black hover:text-white hover:drop-shadow-[-2px_2px_2px_rgba(83,83,83,1)] drop-shadow-[-4px_4px_2px_rgba(83,83,83,1)] bg-white hover:-translate-x-1 hover:translate-y-1 transition-all duration-300 ease-in-out cursor-pointer">
-          Add Set
-        </li>
+        </Button>
+        <Button invert onClick={() => router.push("/upload/pack")}>
+          Add Pack
+        </Button>
+        <Button invert onClick={() => router.push("/upload/ability")}>
+          Add Ability
+        </Button>
+        <Button invert onClick={() => router.push("/upload/attack")}>
+          Add Attack
+        </Button>
+        <Button invert onClick={() => router.push("/upload/exchange-item")}>
+          Add Exchange Item
+        </Button>
+        <Button
+          invert
+          onClick={() => router.push("/upload/special-shop-ticket")}
+        >
+          Add Special Shop Ticket Item
+        </Button>
+        <Button invert onClick={() => router.push("/upload/trade-token")}>
+          Add Trade Token Item
+        </Button>
+        <Button invert onClick={() => router.push("/upload/flair")}>
+          Add Flair Item
+        </Button>
       </ul>
     </main>
   )

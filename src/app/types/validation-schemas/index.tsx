@@ -1,5 +1,18 @@
 import { z, ZodType } from "zod"
-import { FormCardData, Rarity, SubTypes, SuperType, Types } from ".."
+import {
+  FormAbilityData,
+  FormAttackData,
+  FormCardData,
+  FormExchangeItemData,
+  FormFlairItemData,
+  FormSetData,
+  FormSpecialShopTicketItemData,
+  FormTradeTokenItemData,
+  Rarity,
+  SubTypes,
+  SuperType,
+  Types,
+} from ".."
 
 export const CardSchema: ZodType<FormCardData> = z.object({
   name: z.string({
@@ -13,7 +26,7 @@ export const CardSchema: ZodType<FormCardData> = z.object({
   evolvesFrom: z.string().optional(),
   weakness: z.nativeEnum(Types, { message: "field required" }).optional(),
   retreatCost: z.number({ message: "field required" }).optional(),
-  setId: z.number({
+  packCode: z.string({
     message: "field required",
   }),
   packs: z.string({
@@ -48,4 +61,69 @@ export const CardSchema: ZodType<FormCardData> = z.object({
     required_error: "required field",
     invalid_type_error: "field required",
   }),
+})
+
+export const PackSchema: ZodType<FormSetData> = z.object({
+  name: z.string({
+    required_error: "required field",
+    invalid_type_error: "Name is required",
+  }),
+  code: z.string({ message: "field required" }),
+  releaseDate: z.string({ message: "field required" }),
+  generation: z.string(),
+  boosterPackList: z.string({ message: "field required" }),
+})
+
+export const AbilitiesSchema: ZodType<FormAbilityData> = z.object({
+  name: z.string({
+    required_error: "required field",
+    invalid_type_error: "Name is required",
+  }),
+  text: z.string({ message: "field required" }),
+  cardNumber: z.string({ message: "field required" }),
+})
+
+export const AttackSchema: ZodType<FormAttackData> = z.object({
+  name: z.string({
+    required_error: "required field",
+    invalid_type_error: "Name is required",
+  }),
+  cost: z.string({ message: "field required" }),
+  damage: z.string().optional(),
+  text: z.string().optional(),
+  convertedEnergyCost: z.number({ message: "field required" }),
+  cardNumber: z.string({ message: "field required" }),
+})
+export const ExchangeItemSchema: ZodType<FormExchangeItemData> = z.object({
+  exchangeMinCost: z.string({
+    required_error: "required field",
+    invalid_type_error: "exchangeMinCost is required",
+  }),
+  packPointsCost: z.string({ message: "field required" }),
+  cardNumber: z.string({ message: "field required" }),
+})
+export const SpecialShopTicketsItemSchema: ZodType<FormSpecialShopTicketItemData> =
+  z.object({
+    quantity: z.string({
+      required_error: "required field",
+      invalid_type_error: "quantity is required",
+    }),
+    shineDustCost: z.string({ message: "field required" }),
+    cardNumber: z.string({ message: "field required" }),
+  })
+export const TradeTokenItemSchema: ZodType<FormTradeTokenItemData> = z.object({
+  quantity: z.string({
+    required_error: "required field",
+    invalid_type_error: "quantity is required",
+  }),
+  cardNumber: z.string({ message: "field required" }),
+})
+
+export const FlairItemSchema: ZodType<FormFlairItemData> = z.object({
+  name: z.string({
+    required_error: "required field",
+    invalid_type_error: "name is required",
+  }),
+  shineDustCost: z.string({ message: "field required" }),
+  cardNumber: z.string({ message: "field required" }),
 })
