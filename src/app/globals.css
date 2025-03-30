@@ -3,3 +3,6 @@
 .custom-template-grid {
   grid-template-columns: repeat(auto-fit, minmax(min(271px, 100%), 1fr));
 }
+.custom-template-grid-for-cards {
+  grid-template-columns: repeat(auto-fit, minmax(min(148px, 100%), 1fr));
+}

@@ -31,7 +31,7 @@ const UploadAbility = () => {
       <div className="flex container flex-col gap-y-3 mt-5 text-center">
         <div className="flex w-full justify-between">
           <div className="flex gap-6">
-            <Button onClick={() => router.push("/")}>⬅</Button>
+            <Button onClick={() => router.push("/upload")}>⬅</Button>
             <h4 className="w-fit p-2 text-xl border-1 border-[rgba(83,83,83,1)] drop-shadow-[-4px_-4px_2px_rgba(83,83,83,1)] bg-white">
               Add Ability
             </h4>
